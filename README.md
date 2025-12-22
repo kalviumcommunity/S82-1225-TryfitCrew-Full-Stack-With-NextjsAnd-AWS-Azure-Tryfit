@@ -72,3 +72,37 @@ Separate builds were tested using `npm run build:staging` and `npm run build:pro
 ### Reflection
 
 Multi-environment setups improve CI/CD reliability by allowing testing in staging before production deployment, reducing the risk of breaking live systems.
+
+## Understanding Cloud Deployments: Docker → CI/CD → AWS/Azure
+
+### Docker & Containerization
+The Try-Fit application is containerized using Docker. A Dockerfile defines the runtime environment and build steps, ensuring the application runs consistently across development, CI, and production.
+
+Docker Compose is used to manage container configuration and inject environment variables safely.
+
+### CI/CD Automation
+A CI/CD pipeline using GitHub Actions automates the build process. On every push, the pipeline builds a Docker image, ensuring deployments are repeatable and reliable.
+
+Automation reduces human error and ensures consistency across environments.
+
+### Cloud Deployment (AWS/Azure)
+The Docker image can be deployed to AWS (EC2 or Elastic Beanstalk) or Azure App Service. The cloud platform pulls the image and runs it as a container, exposing it via a public endpoint.
+
+Environment variables and secrets are injected securely at runtime instead of being hardcoded.
+
+### Secrets Management
+Sensitive information such as database URLs and API keys are never committed to the repository. Secrets are stored using GitHub Secrets or cloud secret managers and injected during deployment.
+
+### Case Study: QuickServe Deployment Issues
+QuickServe faced deployment failures due to missing environment variables, port conflicts, and old containers continuing to run.
+
+These issues occur when the deployment chain is broken between Docker, CI/CD, and cloud runtime.
+
+A proper workflow ensures:
+- Versioned Docker images
+- Old containers are stopped before new ones start
+- Required environment variables are validated
+- CI/CD pipelines fail early on misconfiguration
+
+### Reflection
+This exercise showed that most deployment failures are caused by configuration and orchestration issues rather than application code. Docker and CI/CD help enforce consistency, security, and reliability in cloud deployments.
