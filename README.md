@@ -1,108 +1,88 @@
-# Try-Fit — Environment-Aware Builds & Secure Secrets Management
+# 🧥 Try-Fit — Project Initialization & Folder Structure
+## 📌 Project Overview
 
-## Rendering Strategies Used in TryFit
+Try-Fit is a try-at-home clothing e-commerce platform where users can explore outfits and virtually try them before purchasing.
+This repository sets up the base Next.js (TypeScript) structure that will be extended in future sprints.
 
-### Pages and Rendering Modes
+### 🛠️ Tech Stack
 
-#### Static Rendering (SSG)
+- Next.js (App Router)
 
-- Page: /about
+- TypeScript
 
-- This page is statically generated at build time using export const revalidate = false.
+- ESLint
 
-#### Dynamic Rendering (SSR)
+- Node.js
 
-- Page: /dashboard
+### 📂 Folder Structure
+src/
+├── app/          # Application routes and pages (App Router)
+│   ├── page.tsx  # Home page
+│   ├── layout.tsx # Root layout
+│
+├── components/   # Reusable UI components (buttons, cards, navbar)
+│
+├── lib/          # Utility functions, helpers, and configurations
+│
+public/           # Static assets (images, icons)
 
-- This page is rendered on every request using export const dynamic = 'force-dynamic' and cache: 'no-store'.
+#### Folder Explanation
 
-#### Hybrid Rendering (ISR)
+app/
+Contains all routes and pages using Next.js App Router.
+Each folder represents a route, improving clarity and scalability.
 
-= Page: /news
+components/
+Stores reusable UI components to avoid duplication and keep UI logic clean.
 
-- This page uses Incremental Static Regeneration with export const revalidate = 60.
+lib/
+Holds helper functions, constants, and configurations shared across the app.
 
-#### Why Each Approach Was Chosen
+public/
+Stores static assets that can be accessed directly by the browser.
 
-- Static Rendering was chosen for the About page because it contains brand and company information that rarely changes. Pre-rendering ensures fast load times and good SEO.
+### 🧠 Naming Conventions
 
-- Dynamic Rendering was chosen for the Dashboard because it displays user-specific data such as active trials and order status, which must always be up to date.
+Components use PascalCase (e.g., Navbar.tsx)
 
-- Hybrid Rendering was chosen for the News page because product trends and new arrivals change periodically but do not require real-time updates.
+Utility files use camelCase (e.g., formatDate.ts)
 
-### Performance, Caching, and User Experience
+Folder names are lowercase and descriptive
 
-- Static pages load instantly since they are served from cache without server computation.
+### 🚀 Setup Instructions
 
-- Dynamic pages ensure data freshness and accuracy by fetching data on every request.
+1️⃣ Install Dependencies
+- npm install
 
-- Hybrid pages combine both benefits by serving cached content while automatically revalidating in the background, reducing server load and improving response times.
+2️⃣ Run the Development Server
+- npm run dev
 
-- This selective caching strategy improves performance while maintaining a smooth user experience.
+3️⃣ Open in Browser
 
-#### Verification: Page Generation Modes
+- Visit 👉 http://localhost:3000
 
-- Static Rendering: Verified via build-time logs and absence of repeated network requests on refresh.
+## 📸 Local Run Screenshot
 
-- Dynamic Rendering: Verified using DevTools Network tab showing data fetched on every request.
+![Try-Fit running locally](./screenshots/sprint-1-local-run.png)
 
-- Hybrid Rendering: Verified by observing content regeneration after the 60-second revalidation window in deployment logs.
+### 🔍 Reflection: Why This Structure?
 
+- Separates routing, UI, and logic, making the codebase easy to understand.
 
-### Reflection on Trade-offs and Scalability
+- Encourages reusability and cleaner commits in team collaboration.
 
-- If TryFit had 10× more users, using SSR for all pages would significantly increase server load and hosting costs.
+- Scales well as new features, pages, and APIs are added in future sprints.
 
-- In that scenario, more pages would be converted to static or hybrid rendering, reserving SSR only for critical user-specific flows such as dashboards and checkout.
+- Reduces merge conflicts by keeping responsibilities clearly divided.
 
-- This approach would improve scalability while maintaining data freshness where it matters most.
+- This structure forms a strong foundation for building a large-scale full-stack application in upcoming sprints.
 
-### Environment-Aware Builds
+### ✅ Sprint-1 Outcome
 
-This project uses separate environment configuration files for development, staging, and production. Environment-specific build scripts ensure the correct configuration is loaded during deployment.
+- Next.js TypeScript project initialized successfully
 
-### Secrets Management
+- Standard folder structure implemented
 
-Sensitive information such as database URLs and API endpoints are managed securely using environment variables and GitHub Secrets. No real secrets are committed to the repository.
+- Project runs locally without errors
 
-### Build Verification
-
-Separate builds were tested using `npm run build:staging` and `npm run build:production`, confirming that the application behaves correctly across environments.
-
-### Reflection
-
-Multi-environment setups improve CI/CD reliability by allowing testing in staging before production deployment, reducing the risk of breaking live systems.
-
-## Understanding Cloud Deployments: Docker → CI/CD → AWS/Azure
-
-### Docker & Containerization
-The Try-Fit application is containerized using Docker. A Dockerfile defines the runtime environment and build steps, ensuring the application runs consistently across development, CI, and production.
-
-Docker Compose is used to manage container configuration and inject environment variables safely.
-
-### CI/CD Automation
-A CI/CD pipeline using GitHub Actions automates the build process. On every push, the pipeline builds a Docker image, ensuring deployments are repeatable and reliable.
-
-Automation reduces human error and ensures consistency across environments.
-
-### Cloud Deployment (AWS/Azure)
-The Docker image can be deployed to AWS (EC2 or Elastic Beanstalk) or Azure App Service. The cloud platform pulls the image and runs it as a container, exposing it via a public endpoint.
-
-Environment variables and secrets are injected securely at runtime instead of being hardcoded.
-
-### Secrets Management
-Sensitive information such as database URLs and API keys are never committed to the repository. Secrets are stored using GitHub Secrets or cloud secret managers and injected during deployment.
-
-### Case Study: QuickServe Deployment Issues
-QuickServe faced deployment failures due to missing environment variables, port conflicts, and old containers continuing to run.
-
-These issues occur when the deployment chain is broken between Docker, CI/CD, and cloud runtime.
-
-A proper workflow ensures:
-- Versioned Docker images
-- Old containers are stopped before new ones start
-- Required environment variables are validated
-- CI/CD pipelines fail early on misconfiguration
-
-### Reflection
-This exercise showed that most deployment failures are caused by configuration and orchestration issues rather than application code. Docker and CI/CD help enforce consistency, security, and reliability in cloud deployments.
+- Ready for feature development in future sprints
