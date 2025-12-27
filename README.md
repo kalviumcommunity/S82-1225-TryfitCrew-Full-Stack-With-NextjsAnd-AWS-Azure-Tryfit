@@ -100,3 +100,22 @@ Husky and lint-staged prevent commits with lint or formatting errors, ensuring c
 
 ### Verification
 Lint rules were tested by intentionally committing invalid code, which failed until the issues were fixed.
+
+
+## 🌱 Environment Variable Management
+
+### Environment Files
+- `.env.local` stores sensitive credentials and is ignored by Git.
+- `.env.example` documents all required environment variables with placeholder values.
+
+### Server vs Client Variables
+- Server-only variables (e.g., DATABASE_URL) are accessed securely on the server.
+- Client-safe variables are prefixed with NEXT_PUBLIC_ and can be used in browser code.
+
+### Security Practices
+- Secrets are never committed to the repository.
+- Only documented variables are exposed, preventing accidental leaks.
+- `.env.example` allows easy project setup across environments.
+
+### Verification
+Environment variables were tested locally using process.env with correct scoping.
