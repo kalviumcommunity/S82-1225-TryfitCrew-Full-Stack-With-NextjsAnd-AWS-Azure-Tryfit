@@ -86,3 +86,17 @@ Folder names are lowercase and descriptive
 - Project runs locally without errors
 
 - Ready for feature development in future sprints
+
+## 🧪 TypeScript & ESLint Configuration
+
+### Strict TypeScript
+Strict mode is enabled to catch type-related errors at compile time, reducing runtime bugs and enforcing safer code.
+
+### ESLint + Prettier
+ESLint ensures code quality rules like no unused variables and consistent syntax, while Prettier enforces uniform formatting across the codebase.
+
+### Pre-Commit Hooks
+Husky and lint-staged prevent commits with lint or formatting errors, ensuring consistent and clean code across the team.
+
+### Verification
+Lint rules were tested by intentionally committing invalid code, which failed until the issues were fixed.
