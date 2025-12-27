@@ -26,7 +26,7 @@ src/
 │
 public/           # Static assets (images, icons)
 
-#### Folder Explanation
+### Folder Explanation
 
 app/
 Contains all routes and pages using Next.js App Router.
@@ -41,7 +41,7 @@ Holds helper functions, constants, and configurations shared across the app.
 public/
 Stores static assets that can be accessed directly by the browser.
 
-### 🧠 Naming Conventions
+#### 🧠 Naming Conventions
 
 Components use PascalCase (e.g., Navbar.tsx)
 
@@ -49,7 +49,7 @@ Utility files use camelCase (e.g., formatDate.ts)
 
 Folder names are lowercase and descriptive
 
-### 🚀 Setup Instructions
+#### 🚀 Setup Instructions
 
 1️⃣ Install Dependencies
 - npm install
@@ -61,42 +61,29 @@ Folder names are lowercase and descriptive
 
 - Visit 👉 http://localhost:3000
 
-## 📸 Local Run Screenshot
+📸 Local Run Screenshot
 
-![Try-Fit running locally](./screenshots/sprint-1-local-run.png)
+(Screenshot of the app running on http://localhost:3000
+ is embedded here)
 
-### 🔍 Reflection: Why This Structure?
+🔍 Reflection: Why This Structure?
 
-- Separates routing, UI, and logic, making the codebase easy to understand.
+Separates routing, UI, and logic, making the codebase easy to understand.
 
-- Encourages reusability and cleaner commits in team collaboration.
+Encourages reusability and cleaner commits in team collaboration.
 
-- Scales well as new features, pages, and APIs are added in future sprints.
+Scales well as new features, pages, and APIs are added in future sprints.
 
-- Reduces merge conflicts by keeping responsibilities clearly divided.
+Reduces merge conflicts by keeping responsibilities clearly divided.
 
-- This structure forms a strong foundation for building a large-scale full-stack application in upcoming sprints.
+This structure forms a strong foundation for building a large-scale full-stack application in upcoming sprints.
 
-### ✅ Sprint-1 Outcome
+✅ Sprint-1 Outcome
 
-- Next.js TypeScript project initialized successfully
+Next.js TypeScript project initialized successfully
 
-- Standard folder structure implemented
+Standard folder structure implemented
 
-- Project runs locally without errors
+Project runs locally without errors
 
-- Ready for feature development in future sprints
-
-## 🧪 TypeScript & ESLint Configuration
-
-### Strict TypeScript
-Strict mode is enabled to catch type-related errors at compile time, reducing runtime bugs and enforcing safer code.
-
-### ESLint + Prettier
-ESLint ensures code quality rules like no unused variables and consistent syntax, while Prettier enforces uniform formatting across the codebase.
-
-### Pre-Commit Hooks
-Husky and lint-staged prevent commits with lint or formatting errors, ensuring consistent and clean code across the team.
-
-### Verification
-Lint rules were tested by intentionally committing invalid code, which failed until the issues were fixed.
+Ready for feature development in future sprints
