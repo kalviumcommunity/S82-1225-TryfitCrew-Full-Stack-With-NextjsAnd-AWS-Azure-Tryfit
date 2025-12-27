@@ -8,7 +8,8 @@
     "build:production": "env-cmd -f .env.production next build",
     "start": "next start",
     "lint": "eslint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build":"next build"
   },
   "dependencies": {
     "dotenv": "^17.2.3",

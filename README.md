@@ -154,3 +154,29 @@ Direct pushes to the main branch are restricted to ensure code review and qualit
 - ESLint and Prettier checks pass
 - No secrets or environment variables exposed
 - Documentation updated if needed
+
+## 🐳 Docker & Compose Setup for Local Development
+
+### Dockerfile
+The Dockerfile defines how the Next.js application is built and run inside a container using a Node.js Alpine image.
+
+### Docker Compose
+Docker Compose is used to run the full local stack:
+- Next.js application
+- PostgreSQL database
+- Redis cache
+
+All services run on a shared Docker network, enabling seamless communication.
+
+### Networks & Volumes
+- A custom bridge network allows containers to communicate securely.
+- A Docker volume is used to persist PostgreSQL data across restarts.
+
+### Environment Variables
+Environment variables are injected into containers using Docker Compose to configure database and cache connections.
+
+### Verification
+The setup was verified by running all containers using docker-compose and confirming that the application, database, and Redis services were running successfully.
+
+### Reflection
+Docker Compose ensures consistent local environments across the team, simplifies onboarding, and reduces configuration-related bugs.
