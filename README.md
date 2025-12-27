@@ -119,3 +119,38 @@ Lint rules were tested by intentionally committing invalid code, which failed un
 
 ### Verification
 Environment variables were tested locally using process.env with correct scoping.
+
+
+## 🌿 Team Branching & PR Workflow
+
+### Branch Naming Convention
+
+This project follows a consistent branch naming strategy to keep work organized and traceable:
+
+- feature/<feature-name> – New features or enhancements
+- fix/<bug-name> – Bug fixes
+- chore/<task-name> – Maintenance tasks, configuration, tooling
+- docs/<update-name> – Documentation updates
+
+#### Examples
+- feature/user-auth
+- fix/navbar-overflow
+- chore/eslint-config
+- docs/update-readme
+
+All contributors are expected to follow this convention for every new branch.
+
+### Pull Request Workflow
+
+All changes are merged via Pull Requests.
+Direct pushes to the main branch are restricted to ensure code review and quality checks.
+
+## 🔍 Code Review Checklist
+
+- Branch follows naming conventions
+- Code follows project structure and naming rules
+- Feature or fix tested locally
+- No console errors or warnings
+- ESLint and Prettier checks pass
+- No secrets or environment variables exposed
+- Documentation updated if needed
