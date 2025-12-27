@@ -1,74 +1,156 @@
-# Try-Fit — Environment-Aware Builds & Secure Secrets Management
+# 🧥 Try-Fit — Project Initialization & Folder Structure
+## 📌 Project Overview
 
-## Rendering Strategies Used in TryFit
+Try-Fit is a try-at-home clothing e-commerce platform where users can explore outfits and virtually try them before purchasing.
+This repository sets up the base Next.js (TypeScript) structure that will be extended in future sprints.
 
-### Pages and Rendering Modes
+### 🛠️ Tech Stack
 
-#### Static Rendering (SSG)
+- Next.js (App Router)
 
-- Page: /about
+- TypeScript
 
-- This page is statically generated at build time using export const revalidate = false.
+- ESLint
 
-#### Dynamic Rendering (SSR)
+- Node.js
 
-- Page: /dashboard
+### 📂 Folder Structure
+src/
+├── app/          # Application routes and pages (App Router)
+│   ├── page.tsx  # Home page
+│   ├── layout.tsx # Root layout
+│
+├── components/   # Reusable UI components (buttons, cards, navbar)
+│
+├── lib/          # Utility functions, helpers, and configurations
+│
+public/           # Static assets (images, icons)
 
-- This page is rendered on every request using export const dynamic = 'force-dynamic' and cache: 'no-store'.
+#### Folder Explanation
 
-#### Hybrid Rendering (ISR)
+app/
+Contains all routes and pages using Next.js App Router.
+Each folder represents a route, improving clarity and scalability.
 
-= Page: /news
+components/
+Stores reusable UI components to avoid duplication and keep UI logic clean.
 
-- This page uses Incremental Static Regeneration with export const revalidate = 60.
+lib/
+Holds helper functions, constants, and configurations shared across the app.
 
-#### Why Each Approach Was Chosen
+public/
+Stores static assets that can be accessed directly by the browser.
 
-- Static Rendering was chosen for the About page because it contains brand and company information that rarely changes. Pre-rendering ensures fast load times and good SEO.
+### 🧠 Naming Conventions
 
-- Dynamic Rendering was chosen for the Dashboard because it displays user-specific data such as active trials and order status, which must always be up to date.
+Components use PascalCase (e.g., Navbar.tsx)
 
-- Hybrid Rendering was chosen for the News page because product trends and new arrivals change periodically but do not require real-time updates.
+Utility files use camelCase (e.g., formatDate.ts)
 
-### Performance, Caching, and User Experience
+Folder names are lowercase and descriptive
 
-- Static pages load instantly since they are served from cache without server computation.
+### 🚀 Setup Instructions
 
-- Dynamic pages ensure data freshness and accuracy by fetching data on every request.
+1️⃣ Install Dependencies
+- npm install
 
-- Hybrid pages combine both benefits by serving cached content while automatically revalidating in the background, reducing server load and improving response times.
+2️⃣ Run the Development Server
+- npm run dev
 
-- This selective caching strategy improves performance while maintaining a smooth user experience.
+3️⃣ Open in Browser
 
-#### Verification: Page Generation Modes
+- Visit 👉 http://localhost:3000
 
-- Static Rendering: Verified via build-time logs and absence of repeated network requests on refresh.
+## 📸 Local Run Screenshot
 
-- Dynamic Rendering: Verified using DevTools Network tab showing data fetched on every request.
+![Try-Fit running locally](./screenshots/sprint-1-local-run.png)
 
-- Hybrid Rendering: Verified by observing content regeneration after the 60-second revalidation window in deployment logs.
+### 🔍 Reflection: Why This Structure?
+
+- Separates routing, UI, and logic, making the codebase easy to understand.
+
+- Encourages reusability and cleaner commits in team collaboration.
+
+- Scales well as new features, pages, and APIs are added in future sprints.
+
+- Reduces merge conflicts by keeping responsibilities clearly divided.
+
+- This structure forms a strong foundation for building a large-scale full-stack application in upcoming sprints.
+
+### ✅ Sprint-1 Outcome
+
+- Next.js TypeScript project initialized successfully
+
+- Standard folder structure implemented
+
+- Project runs locally without errors
+
+- Ready for feature development in future sprints
+
+## 🧪 TypeScript & ESLint Configuration
+
+### Strict TypeScript
+Strict mode is enabled to catch type-related errors at compile time, reducing runtime bugs and enforcing safer code.
+
+### ESLint + Prettier
+ESLint ensures code quality rules like no unused variables and consistent syntax, while Prettier enforces uniform formatting across the codebase.
+
+### Pre-Commit Hooks
+Husky and lint-staged prevent commits with lint or formatting errors, ensuring consistent and clean code across the team.
+
+### Verification
+Lint rules were tested by intentionally committing invalid code, which failed until the issues were fixed.
 
 
-### Reflection on Trade-offs and Scalability
+## 🌱 Environment Variable Management
 
-- If TryFit had 10× more users, using SSR for all pages would significantly increase server load and hosting costs.
+### Environment Files
+- `.env.local` stores sensitive credentials and is ignored by Git.
+- `.env.example` documents all required environment variables with placeholder values.
 
-- In that scenario, more pages would be converted to static or hybrid rendering, reserving SSR only for critical user-specific flows such as dashboards and checkout.
+### Server vs Client Variables
+- Server-only variables (e.g., DATABASE_URL) are accessed securely on the server.
+- Client-safe variables are prefixed with NEXT_PUBLIC_ and can be used in browser code.
 
-- This approach would improve scalability while maintaining data freshness where it matters most.
+### Security Practices
+- Secrets are never committed to the repository.
+- Only documented variables are exposed, preventing accidental leaks.
+- `.env.example` allows easy project setup across environments.
 
-### Environment-Aware Builds
+### Verification
+Environment variables were tested locally using process.env with correct scoping.
 
-This project uses separate environment configuration files for development, staging, and production. Environment-specific build scripts ensure the correct configuration is loaded during deployment.
 
-### Secrets Management
+## 🌿 Team Branching & PR Workflow
 
-Sensitive information such as database URLs and API endpoints are managed securely using environment variables and GitHub Secrets. No real secrets are committed to the repository.
+### Branch Naming Convention
 
-### Build Verification
+This project follows a consistent branch naming strategy to keep work organized and traceable:
 
-Separate builds were tested using `npm run build:staging` and `npm run build:production`, confirming that the application behaves correctly across environments.
+- feature/<feature-name> – New features or enhancements
+- fix/<bug-name> – Bug fixes
+- chore/<task-name> – Maintenance tasks, configuration, tooling
+- docs/<update-name> – Documentation updates
 
-### Reflection
+#### Examples
+- feature/user-auth
+- fix/navbar-overflow
+- chore/eslint-config
+- docs/update-readme
 
-Multi-environment setups improve CI/CD reliability by allowing testing in staging before production deployment, reducing the risk of breaking live systems.
+All contributors are expected to follow this convention for every new branch.
+
+### Pull Request Workflow
+
+All changes are merged via Pull Requests.
+Direct pushes to the main branch are restricted to ensure code review and quality checks.
+
+## 🔍 Code Review Checklist
+
+- Branch follows naming conventions
+- Code follows project structure and naming rules
+- Feature or fix tested locally
+- No console errors or warnings
+- ESLint and Prettier checks pass
+- No secrets or environment variables exposed
+- Documentation updated if needed
