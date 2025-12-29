@@ -180,3 +180,29 @@ The setup was verified by running all containers using docker-compose and confir
 
 ### Reflection
 Docker Compose ensures consistent local environments across the team, simplifies onboarding, and reduces configuration-related bugs.
+
+
+## 🗄️ PostgreSQL Schema Design
+
+### Core Entities
+- User: Represents customers using the platform
+- Product: Clothing items available for try-fit
+- Category: Groups products logically
+- Order: Try-fit request placed by a user
+- OrderItem: Junction table for products in an order
+
+### Relationships & Constraints
+- One-to-many between User and Order
+- One-to-many between Category and Product
+- Many-to-many between Order and Product via OrderItem
+- Unique constraints on email and category name
+- Cascading deletes to maintain referential integrity
+
+### Normalization
+The schema follows 1NF, 2NF, and 3NF by eliminating redundancy and isolating relationships into separate tables.
+
+### Verification
+Migrations were applied successfully using Prisma, and sample seed data was inserted and verified using Prisma Studio.
+
+### Scalability Reflection
+This schema supports scalability by separating concerns, indexing key relationships, and allowing efficient queries for users, orders, and products even as data volume grows.
