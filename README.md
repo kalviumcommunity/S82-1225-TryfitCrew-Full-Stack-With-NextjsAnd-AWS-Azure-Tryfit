@@ -337,3 +337,73 @@ We use Zod to validate all incoming API requests before executing business logic
 - Prevents bad data
 - Improves DX with clear error messages
 - Same schema reusable in frontend forms
+
+## Authorization Middleware
+
+We use a centralized authorization middleware to protect API routes based on user roles and active sessions.
+
+### Example – Role-Based Access Control (RBAC)
+- Validates JWT token for every protected request
+- Allows all authenticated users to access `/api/users`
+- Restricts `/api/admin` routes to admin users only
+- Blocks access if token is missing, invalid, or role is insufficient
+
+### Benefits
+- Enforces least-privilege principle
+- Prevents unauthorized access to sensitive routes
+- Centralized security logic across the app
+- Easy to extend for new roles (admin, editor, moderator)
+
+
+## Error Handling Middleware
+
+We implemented a centralized error handling system to manage all API errors consistently across the application.
+
+### Logger Utility
+- Logs errors and info messages in structured JSON format
+- Includes level, message, metadata, and timestamp
+- Helps with debugging and production monitoring
+
+### Centralized Error Handler
+- Single `handleError()` function used across API routes
+- Differentiates behavior based on environment:
+  - Development → detailed message + stack trace
+  - Production → safe, user-friendly message only
+
+### Example – API Error Handling
+- Errors are caught inside route handlers
+- Logged internally with full context
+- Returned to users in a secure format
+
+### Benefits
+- Consistent error responses
+- Better debugging with structured logs
+- Improved user trust by hiding sensitive data
+- Easily extensible for custom errors (AuthError, ValidationError)
+
+
+## Redis Caching Layer
+
+We implemented Redis caching using the **cache-aside pattern** to reduce API latency
+for frequently accessed resources like user lists.
+
+### Cached Resource
+- Users list (`/api/users`)
+- Reason: Frequently accessed, read-heavy endpoint
+
+### TTL Policy
+- Cache duration: **60 seconds**
+- Prevents stale data while improving performance
+
+### Cache Invalidation
+- Cache cleared when user data updates
+- Ensures cache coherence with database
+
+### Performance Observation
+- Cache Miss: ~120 ms (DB fetch)
+- Cache Hit: ~10 ms (Redis fetch)
+
+### Reflection
+Caching improves performance significantly but introduces stale-data risks.
+By combining TTL + explicit invalidation, we maintain cache coherence while
+benefiting from low-latency responses.

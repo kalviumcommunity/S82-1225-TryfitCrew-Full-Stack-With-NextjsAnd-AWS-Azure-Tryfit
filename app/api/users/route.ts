@@ -1,17 +1,28 @@
 import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import redis from "@/lib/redis";
+import { sendSuccess } from "@/lib/responseHandler";
+import { handleError } from "..//..//../lib/ErrorHandler";
 
 export async function GET() {
-  const users = await prisma.user.findMany({
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      createdAt: true,
-    },
-  });
+  const cacheKey = "users:list";
 
-  return NextResponse.json(users);
+  try {
+    const cachedUsers = await redis.get(cacheKey);
+
+    if (cachedUsers) {
+      console.log("🟢 Cache HIT");
+      return sendSuccess(JSON.parse(cachedUsers), "Users fetched from cache");
+    }
+
+    console.log("🟡 Cache MISS - Fetching from DB");
+    const users = await prisma.user.findMany();
+
+    await redis.set(cacheKey, JSON.stringify(users), "EX", 60); // TTL = 60s
+
+    return sendSuccess(users, "Users fetched from database");
+  } catch (error) {
+    return handleError(error, "GET /api/users");
+  }
 }
 
 export async function POST(req: Request) {
