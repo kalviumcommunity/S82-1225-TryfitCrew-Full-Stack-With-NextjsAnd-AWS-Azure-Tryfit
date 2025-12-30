@@ -1,37 +1,20 @@
 import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { sendSuccess, sendError } from "../..//../lib/ResponseHandler";
+import { ERROR_CODES } from "@/lib/errorCodes";
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const page = Number(searchParams.get("page")) || 1;
-  const limit = Number(searchParams.get("limit")) || 10;
+export async function GET() {
+  try {
+    const products = await prisma.product.findMany({
+      include: { category: true },
+    });
 
-  const products = await prisma.product.findMany({
-    skip: (page - 1) * limit,
-    take: limit,
-    include: {
-      category: true,
-    },
-  });
-
-  return NextResponse.json({
-    page,
-    limit,
-    data: products,
-  });
-}
-
-export async function POST(req: Request) {
-  const body = await req.json();
-
-  const product = await prisma.product.create({
-    data: {
-      name: body.name,
-      price: body.price,
-      stock: body.stock,
-      categoryId: body.categoryId,
-    },
-  });
-
-  return NextResponse.json(product, { status: 201 });
+    return sendSuccess(products, "Products fetched successfully");
+  } catch (error) {
+    return sendError(
+      "Failed to fetch products",
+      ERROR_CODES.DATABASE_ERROR,
+      500,
+      error
+    );
+  }
 }

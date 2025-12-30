@@ -305,3 +305,19 @@ Prisma query logging was enabled using:
 
 ```bash
 DEBUG="prisma:query" npm run dev
+
+## Global API Response Handler
+
+TryFit uses a centralized API response handler to ensure all backend
+endpoints return consistent and predictable responses.
+
+### Unified Response Format
+
+#### Success Response
+```json
+{
+  "success": true,
+  "message": "Products fetched successfully",
+  "data": [],
+  "timestamp": "2025-12-30T10:00:00Z"
+}
