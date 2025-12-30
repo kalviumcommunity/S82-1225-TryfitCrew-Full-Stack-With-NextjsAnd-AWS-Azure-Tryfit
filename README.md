@@ -207,3 +207,63 @@ Migrations were applied successfully using Prisma, and sample seed data was inse
 ### Scalability Reflection
 This schema supports scalability by separating concerns, indexing key relationships, and allowing efficient queries for users, orders, and products even as data volume grows.
 
+## 🧬 Prisma ORM Setup & Client Initialization (2.14)
+
+Prisma ORM is used as the database access layer for the TryFit application,
+providing type-safe and reliable interaction with the PostgreSQL database.
+
+### Setup Overview
+- Prisma was installed and initialized in the `/prisma` directory
+- Database models were defined in `schema.prisma`
+- Prisma Client was generated using `npx prisma generate`
+- A singleton Prisma Client was configured in `src/lib/prisma.ts` to prevent
+  multiple instances during development
+
+### Prisma Client Usage in Next.js
+Prisma Client is imported and used inside a Next.js server component to fetch
+data from PostgreSQL:
+
+```ts
+import { prisma } from "../lib/prisma";
+
+export default async function Home() {
+  const users = await prisma.user.findMany();
+  return <pre>{JSON.stringify(users, null, 2)}</pre>;
+}
+
+
+## 🗄️ Database Migrations & Seed Scripts (2.15)
+
+### Migration Workflow
+Prisma Migrate is used to version-control database schema changes.
+Each migration generates SQL files inside `prisma/migrations/`.
+
+Commands used:
+- `npx prisma migrate dev --name init_schema`
+- `npx prisma migrate reset`
+
+This ensures the database schema can be recreated consistently across environments.
+
+### Reset & Rollback Strategy
+The `prisma migrate reset` command is used during development to:
+- Drop all tables
+- Reapply all migrations
+- Re-run seed scripts
+
+This keeps the local database clean while preserving migration history.
+
+### Seed Script
+A reproducible seed script is defined in `prisma/seed.ts` and executed using:
+- `npx prisma db seed`
+
+Idempotency is handled using `upsert` to prevent duplicate records.
+
+### Verification
+- Migration files generated successfully
+- Seed data inserted correctly
+- Data verified using Prisma Studio
+
+### Reflection
+In production, migrations should be tested in staging first,
+with database backups taken before applying schema changes.
+This minimizes the risk of data loss or corruption.
