@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/balaj/Documents/Tryfit/tryfit/src/app/page.tsx"],"sourcesContent":["import { prisma } from \"@/lib/prisma\";\r\n\r\nexport default async function Home() {\r\n  const users = await prisma.user.findMany();\r\n\r\n  return (\r\n    <main style={{ padding: 40 }}>\r\n      <h1>TryFit – Prisma Test</h1>\r\n      <pre>{JSON.stringify(users, null, 2)}</pre>\r\n    </main>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;;;;;;;;AAEe,eAAe;IAC5B,MAAM,QAAQ,MAAM,OAAO,IAAI,CAAC,QAAQ;IAExC,qBACE,8OAAC;QAAK,OAAO;YAAE,SAAS;QAAG;;0BACzB,8OAAC;0BAAG;;;;;;0BACJ,8OAAC;0BAAK,KAAK,SAAS,CAAC,OAAO,MAAM;;;;;;;;;;;;AAGxC"}}]
+}
