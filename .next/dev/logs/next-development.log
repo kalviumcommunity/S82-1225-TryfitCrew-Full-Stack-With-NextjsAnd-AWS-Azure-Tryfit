@@ -1,4 +1,83 @@
-[00:00:04.382] Server  LOG      ✓ Ready in 2.8s
-[00:07:20.211] Server  LOG     10
-[00:07:20.918] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:07:22.076] Browser WARN    Image with src "http://localhost:3000/vercel.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:00:01.180] Server  LOG      ✓ Ready in 741ms
+[00:00:10.409] Server  ERROR    ⨯ ./src/app/page.tsx:1:1
+Module not found: Can't resolve '@/lib/prisma'
+> 1 | import { prisma } from "@/lib/prisma";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | export default async function Home() {
+  4 |   const users = await prisma.user.findMany();
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:00:11.699] Browser ERROR   uncaughtError: Error: ./src/app/page.tsx:1:1
+Module not found: Can't resolve '@/lib/prisma'
+> 1 | import { prisma } from "@/lib/prisma";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | export default async function Home() {
+  4 |   const users = await prisma.user.findMany();
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:00:11.961] Browser ERROR   ./src/app/page.tsx:1:1
+Module not found: Can't resolve '@/lib/prisma'
+> 1 | import { prisma } from "@/lib/prisma";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | export default async function Home() {
+  4 |   const users = await prisma.user.findMany();
+
+https://nextjs.org/docs/messages/module-not-found
+[00:00:12.190] Browser ERROR   ./src/app/page.tsx:1:1
+Module not found: Can't resolve '@/lib/prisma'
+> 1 | import { prisma } from "@/lib/prisma";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | export default async function Home() {
+  4 |   const users = await prisma.user.findMany();
+
+https://nextjs.org/docs/messages/module-not-found
+[00:00:43.153] Server  ERROR    ⨯ ./src/app/page.tsx:1:1
+Module not found: Can't resolve '../'
+> 1 | import { prisma } from "../";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | export default async function Home() {
+  4 |   const users = await prisma.user.findMany();
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:00:43.154] Server  ERROR    ⨯ ./src/app/page.tsx:1:1
+Module not found: Can't resolve '../'
+> 1 | import { prisma } from "../";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | export default async function Home() {
+  4 |   const users = await prisma.user.findMany();
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:00:43.924] Browser ERROR   ./src/app/page.tsx:1:1
+Module not found: Can't resolve '../'
+> 1 | import { prisma } from "../";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | export default async function Home() {
+  4 |   const users = await prisma.user.findMany();
+
+https://nextjs.org/docs/messages/module-not-found
+[00:00:47.002] Server  LOG     prisma:info "Starting a postgresql pool with 13 connections."
+[00:00:47.294] Server  LOG     prisma:query "SELECT \"public\".\"User\".\"id\", \"public\".\"User\".\"name\", \"public\".\"User\".\"email\", \"public\".\"User\".\"createdAt\" FROM \"public\".\"User\" WHERE 1=1 OFFSET $1"
+[00:00:47.533] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold

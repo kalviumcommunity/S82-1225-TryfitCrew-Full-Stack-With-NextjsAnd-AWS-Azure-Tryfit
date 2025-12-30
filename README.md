@@ -72,3 +72,27 @@ Separate builds were tested using `npm run build:staging` and `npm run build:pro
 ### Reflection
 
 Multi-environment setups improve CI/CD reliability by allowing testing in staging before production deployment, reducing the risk of breaking live systems.
+
+## 🧬 Prisma ORM Setup & Client Initialization (2.14)
+
+Prisma ORM is used as the database access layer for the TryFit application,
+providing type-safe and reliable interaction with the PostgreSQL database.
+
+### Setup Overview
+- Prisma was installed and initialized in the `/prisma` directory
+- Database models were defined in `schema.prisma`
+- Prisma Client was generated using `npx prisma generate`
+- A singleton Prisma Client was configured in `src/lib/prisma.ts` to prevent
+  multiple instances during development
+
+### Prisma Client Usage in Next.js
+Prisma Client is imported and used inside a Next.js server component to fetch
+data from PostgreSQL:
+
+```ts
+import { prisma } from "../lib/prisma";
+
+export default async function Home() {
+  const users = await prisma.user.findMany();
+  return <pre>{JSON.stringify(users, null, 2)}</pre>;
+}
