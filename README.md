@@ -230,8 +230,7 @@ export default async function Home() {
   const users = await prisma.user.findMany();
   return <pre>{JSON.stringify(users, null, 2)}</pre>;
 }
-
-
+```
 ## 🗄️ Database Migrations & Seed Scripts (2.15)
 
 ### Migration Workflow
@@ -305,7 +304,7 @@ Prisma query logging was enabled using:
 
 ```bash
 DEBUG="prisma:query" npm run dev
-
+```
 ## Global API Response Handler
 
 TryFit uses a centralized API response handler to ensure all backend
@@ -322,7 +321,7 @@ endpoints return consistent and predictable responses.
   "timestamp": "2025-12-30T10:00:00Z"
 }
 
-
+```
 ## Input Validation with Zod
 
 We use Zod to validate all incoming API requests before executing business logic.
