@@ -206,3 +206,4 @@ Migrations were applied successfully using Prisma, and sample seed data was inse
 
 ### Scalability Reflection
 This schema supports scalability by separating concerns, indexing key relationships, and allowing efficient queries for users, orders, and products even as data volume grows.
+
