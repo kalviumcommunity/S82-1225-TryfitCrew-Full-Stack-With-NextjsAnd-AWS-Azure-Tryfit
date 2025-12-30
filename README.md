@@ -267,3 +267,41 @@ Idempotency is handled using `upsert` to prevent duplicate records.
 In production, migrations should be tested in staging first,
 with database backups taken before applying schema changes.
 This minimizes the risk of data loss or corruption.
+
+
+## 🔄 Transactions & Query Optimisation (2.16)
+
+### Transactions
+I implemented Prisma transactions to ensure atomic database operations.  
+A real-world order placement flow was used:
+
+- Create order
+- Create order items
+- Decrement product stock
+
+All operations are wrapped in a Prisma `$transaction`.  
+If any step fails (e.g., insufficient stock), the entire transaction is rolled back automatically.
+
+### Rollback Handling
+Transactions are wrapped in `try-catch` blocks.  
+Rollback was verified by intentionally triggering an error, confirming no partial writes occurred.
+
+### Query Optimisation
+To improve performance and avoid over-fetching:
+- Used `select` instead of `include`
+- Applied pagination with `take`
+- Used `createMany` for bulk inserts
+
+### Indexes
+Indexes were added for frequently queried fields:
+
+- `Order.userId`
+- `Order.status + createdAt`
+
+This improves filtering and sorting performance for common queries.
+
+### Performance Monitoring
+Prisma query logging was enabled using:
+
+```bash
+DEBUG="prisma:query" npm run dev
