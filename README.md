@@ -321,3 +321,18 @@ endpoints return consistent and predictable responses.
   "data": [],
   "timestamp": "2025-12-30T10:00:00Z"
 }
+
+
+## Input Validation with Zod
+
+We use Zod to validate all POST/PUT requests before executing business logic.
+
+### Example – Order Validation
+- Ensures quantity ≥ 1
+- Prevents invalid user/product IDs
+- Protects database from malformed input
+
+### Benefits
+- Prevents bad data
+- Improves DX with clear errors
+- Same schema reusable in frontend forms

@@ -1,69 +1,33 @@
-import { prisma } from "@/lib/prisma";
+import { ZodError } from "zod";
+import { orderSchema } from "@/lib/schemas/order.schema";
 import { sendSuccess, sendError } from "@/lib/responseHandler";
-import { ERROR_CODES } from "@/lib/errorCodes";
+import { placeOrder } from "@/lib/transactions";
 
 export async function POST(req: Request) {
   try {
-    const { userId, productId, quantity } = await req.json();
+    const body = await req.json();
+    const data = orderSchema.parse(body);
 
-    if (!userId || !productId || !quantity) {
-      return sendError(
-        "Missing required fields",
-        ERROR_CODES.VALIDATION_ERROR,
-        400
-      );
-    }
-
-    const order = await prisma.$transaction(async (tx) => {
-      const product = await tx.product.findUnique({
-        where: { id: productId },
-      });
-
-      if (!product || product.stock < quantity) {
-        throw new Error("OUT_OF_STOCK");
-      }
-
-      const newOrder = await tx.order.create({
-        data: {
-          userId,
-          total: product.price * quantity,
-          status: "CONFIRMED",
-        },
-      });
-
-      await tx.orderItem.create({
-        data: {
-          orderId: newOrder.id,
-          productId,
-          quantity,
-        },
-      });
-
-      await tx.product.update({
-        where: { id: productId },
-        data: {
-          stock: { decrement: quantity },
-        },
-      });
-
-      return newOrder;
-    });
+    const order = await placeOrder(
+      data.userId,
+      data.productId,
+      data.quantity
+    );
 
     return sendSuccess(order, "Order placed successfully", 201);
-  } catch (error: any) {
-    if (error.message === "OUT_OF_STOCK") {
+  } catch (error) {
+    if (error instanceof ZodError) {
       return sendError(
-        "Product is out of stock",
-        ERROR_CODES.OUT_OF_STOCK,
-        409
+        "Validation Error",
+        "VALIDATION_ERROR",
+        400,
+        error.errors.map(e => ({
+          field: e.path[0],
+          message: e.message,
+        }))
       );
     }
 
-    return sendError(
-      "Order creation failed",
-      ERROR_CODES.INTERNAL_ERROR,
-      500,
-      error
-    );
+    return sendError("Order failed", "ORDER_ERROR", 500, error);
   }
 }
