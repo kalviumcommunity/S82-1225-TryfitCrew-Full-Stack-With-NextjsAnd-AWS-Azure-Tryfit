@@ -325,14 +325,15 @@ endpoints return consistent and predictable responses.
 
 ## Input Validation with Zod
 
-We use Zod to validate all POST/PUT requests before executing business logic.
+We use Zod to validate all incoming API requests before executing business logic.
 
-### Example – Order Validation
-- Ensures quantity ≥ 1
-- Prevents invalid user/product IDs
-- Protects database from malformed input
+### Example – Authentication Validation
+- Ensures valid email format
+- Enforces minimum password length
+- Prevents missing or malformed request data
+- Protects database from invalid input
 
 ### Benefits
 - Prevents bad data
-- Improves DX with clear errors
+- Improves DX with clear error messages
 - Same schema reusable in frontend forms
