@@ -1,34 +1,57 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { 
-  ArrowRight, 
-  Mail, 
-  Lock, 
-  Eye, 
-  EyeOff, 
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
   Chrome,
   User,
   Zap,
   CheckCircle2,
-  Dna
-} from 'lucide-react';
+  Dna,
+} from "lucide-react";
 
 export default function TryFitSignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
 
   const containerStagger = {
-    animate: { transition: { staggerChildren: 0.05 } }
+    animate: { transition: { staggerChildren: 0.05 } },
   };
 
   const fadeInUp = {
     initial: { opacity: 0, y: 15 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.5, ease: [0.6, 0.05, 0.01, 0.9] }
+    transition: { duration: 0.5, ease: [0.6, 0.05, 0.01, 0.9] },
   } as const;
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: `${firstName} ${lastName}`,
+        email,
+        password,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message);
+      return;
+    }
+
+    alert("Signup successful!");
+  };
 
   return (
     <main className="signup-wrapper">
@@ -198,18 +221,25 @@ export default function TryFitSignupPage() {
 
       {/* --- Left Column: Static Height Visual --- */}
       <section className="brand-side">
-        <Link href="/" className="brand-logo">TRYFIT</Link>
+        <Link href="/" className="brand-logo">
+          TRYFIT
+        </Link>
 
-        <motion.div 
+        <motion.div
           className="perks-container"
           variants={containerStagger}
           initial="initial"
           animate="animate"
         >
-          <motion.h2 variants={fadeInUp}>Join the <br/>TryFit</motion.h2>
-          
+          <motion.h2 variants={fadeInUp}>
+            Join the <br />
+            TryFit
+          </motion.h2>
+
           <motion.div className="perk-row" variants={fadeInUp}>
-            <div className="perk-icon-box"><Dna size={16} /></div>
+            <div className="perk-icon-box">
+              <Dna size={16} />
+            </div>
             <div className="perk-text">
               <h4>Style DNA</h4>
               <p>AI-curated fitness sets based on your silhouette.</p>
@@ -217,7 +247,9 @@ export default function TryFitSignupPage() {
           </motion.div>
 
           <motion.div className="perk-row" variants={fadeInUp}>
-            <div className="perk-icon-box"><Zap size={16} /></div>
+            <div className="perk-icon-box">
+              <Zap size={16} />
+            </div>
             <div className="perk-text">
               <h4>Priority Drops</h4>
               <p>24-hour early access to seasonal collections.</p>
@@ -225,7 +257,9 @@ export default function TryFitSignupPage() {
           </motion.div>
 
           <motion.div className="perk-row" variants={fadeInUp}>
-            <div className="perk-icon-box"><CheckCircle2 size={16} /></div>
+            <div className="perk-icon-box">
+              <CheckCircle2 size={16} />
+            </div>
             <div className="perk-text">
               <h4>Try-Before-Buy</h4>
               <p>Try up to 3 items at home before payment.</p>
@@ -233,9 +267,7 @@ export default function TryFitSignupPage() {
           </motion.div>
         </motion.div>
 
-        <div className="copyright">
-          © 2025 TRYFIT STUDIO INTERNATIONALE
-        </div>
+        <div className="copyright">© 2025 TRYFIT STUDIO INTERNATIONALE</div>
       </section>
 
       {/* --- Right Column: Full Height Form --- */}
@@ -244,7 +276,7 @@ export default function TryFitSignupPage() {
           Member? <Link href="/login">Sign In</Link>
         </div>
 
-        <motion.div 
+        <motion.div
           className="form-container"
           initial={fadeInUp.initial}
           animate={fadeInUp.animate}
@@ -254,7 +286,7 @@ export default function TryFitSignupPage() {
             <p>Elevate your performance with TryFit membership.</p>
           </div>
 
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={handleSignup}>
             <div className="input-row">
               <div className="input-group">
                 <label className="label">First Name</label>
@@ -283,36 +315,56 @@ export default function TryFitSignupPage() {
               <label className="label">Password</label>
               <div className="field-wrap">
                 <Lock size={16} color="#ccc" />
-                <input 
-                  type={showPassword ? "text" : "password"} 
-                  placeholder="Min. 8 characters" 
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Min. 8 characters"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  required 
+                  required
                 />
-                <div onClick={() => setShowPassword(!showPassword)} style={{ cursor: 'pointer', padding: '5px' }}>
-                  {showPassword ? <EyeOff size={16} color="#ccc" /> : <Eye size={16} color="#ccc" />}
+                <div
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{ cursor: "pointer", padding: "5px" }}
+                >
+                  {showPassword ? (
+                    <EyeOff size={16} color="#ccc" />
+                  ) : (
+                    <Eye size={16} color="#ccc" />
+                  )}
                 </div>
               </div>
               <div className="strength-bar">
-                <div 
-                  className="strength-fill" 
-                  style={{ 
-                    width: password.length > 0 ? `${Math.min(password.length * 12, 100)}%` : '0%',
-                    background: password.length < 6 ? '#ff4d4d' : password.length < 10 ? '#ffd700' : '#4ade80'
+                <div
+                  className="strength-fill"
+                  style={{
+                    width:
+                      password.length > 0
+                        ? `${Math.min(password.length * 12, 100)}%`
+                        : "0%",
+                    background:
+                      password.length < 6
+                        ? "#ff4d4d"
+                        : password.length < 10
+                          ? "#ffd700"
+                          : "#4ade80",
                   }}
                 ></div>
               </div>
             </div>
 
             <div className="consent-box">
-              <input type="checkbox" required style={{ marginTop: '3px', accentColor: 'black' }} />
+              <input
+                type="checkbox"
+                required
+                style={{ marginTop: "3px", accentColor: "black" }}
+              />
               <div className="consent-text">
-                I agree to the <b>Terms</b> and <b>Privacy Policy</b>. I opt-in to <b>Style DNA</b> processing for a personalized journey.
+                I agree to the <b>Terms</b> and <b>Privacy Policy</b>. I opt-in
+                to <b>Style DNA</b> processing for a personalized journey.
               </div>
             </div>
 
-            <motion.button 
+            <motion.button
               className="btn-join"
               whileTap={{ scale: 0.98 }}
               type="submit"
@@ -321,8 +373,18 @@ export default function TryFitSignupPage() {
             </motion.button>
           </form>
 
-          <div style={{ marginTop: '20px', textAlign: 'center' }}>
-            <p style={{ fontSize: '10px', color: '#bbb', marginBottom: '10px', letterSpacing: '1px', fontWeight: 800 }}>OR REGISTER WITH</p>
+          <div style={{ marginTop: "20px", textAlign: "center" }}>
+            <p
+              style={{
+                fontSize: "10px",
+                color: "#bbb",
+                marginBottom: "10px",
+                letterSpacing: "1px",
+                fontWeight: 800,
+              }}
+            >
+              OR REGISTER WITH
+            </p>
             <button className="google-btn">
               <Chrome size={16} /> Google
             </button>

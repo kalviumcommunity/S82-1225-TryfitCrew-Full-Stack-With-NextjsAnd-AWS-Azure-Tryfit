@@ -1,19 +1,19 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { 
-  ArrowRight, 
-  Mail, 
-  Lock, 
-  Eye, 
-  EyeOff, 
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
   ChevronLeft,
   Chrome,
   ShieldCheck,
-  Gem
-} from 'lucide-react';
+  Gem,
+} from "lucide-react";
 
 export default function TryFitLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,8 +21,28 @@ export default function TryFitLoginPage() {
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6, ease: [0.6, 0.05, 0.01, 0.9] }
+    transition: { duration: 0.6, ease: [0.6, 0.05, 0.01, 0.9] },
   } as const;
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message);
+      return;
+    }
+
+    localStorage.setItem("token", data.data.token);
+    alert("Login successful");
+  };
 
   return (
     <main className="login-wrapper">
@@ -212,23 +232,45 @@ export default function TryFitLoginPage() {
 
       {/* --- Visual Column --- */}
       <section className="visual-side">
-        <Link href="/" className="brand-logo-white">TRYFIT</Link>
-        
-        <motion.div 
+        <Link href="/" className="brand-logo-white">
+          TRYFIT
+        </Link>
+
+        <motion.div
           className="visual-content"
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h2>The TryFit <br/>Awaits You</h2>
+          <h2>
+            The TryFit <br />
+            Awaits You
+          </h2>
           <div className="perks-list">
-            <div className="perk-item"><ShieldCheck size={18} className="perk-icon" /> Early access to seasonal drops</div>
-            <div className="perk-item"><Gem size={18} className="perk-icon" /> Complimentary tailored fitting</div>
-            <div className="perk-item"><ArrowRight size={18} className="perk-icon" /> Managed Closet & Style Analytics</div>
+            <div className="perk-item">
+              <ShieldCheck size={18} className="perk-icon" /> Early access to
+              seasonal drops
+            </div>
+            <div className="perk-item">
+              <Gem size={18} className="perk-icon" /> Complimentary tailored
+              fitting
+            </div>
+            <div className="perk-item">
+              <ArrowRight size={18} className="perk-icon" /> Managed Closet &
+              Style Analytics
+            </div>
           </div>
         </motion.div>
 
-        <div style={{ position: 'relative', zIndex: 2, fontSize: '11px', fontWeight: 600, opacity: 0.6 }}>
+        <div
+          style={{
+            position: "relative",
+            zIndex: 2,
+            fontSize: "11px",
+            fontWeight: 600,
+            opacity: 0.6,
+          }}
+        >
           © 2025 TRYFIT STUDIO INTERNATIONALE
         </div>
       </section>
@@ -239,7 +281,7 @@ export default function TryFitLoginPage() {
           <ChevronLeft size={14} /> Back to Home
         </Link>
 
-        <motion.div 
+        <motion.div
           className="form-container"
           initial={fadeInUp.initial}
           animate={fadeInUp.animate}
@@ -250,7 +292,7 @@ export default function TryFitLoginPage() {
             <p>Log in to access your bespoke fitness wardrobe.</p>
           </div>
 
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={handleLogin}>
             <div className="input-group">
               <label className="input-label">Email Address</label>
               <div className="input-field-wrap">
@@ -263,12 +305,12 @@ export default function TryFitLoginPage() {
               <label className="input-label">Password</label>
               <div className="input-field-wrap">
                 <Lock size={18} color="#aaa" />
-                <input 
-                  type={showPassword ? "text" : "password"} 
-                  placeholder="••••••••" 
-                  required 
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  required
                 />
-                <div 
+                <div
                   className="password-toggle"
                   onClick={() => setShowPassword(!showPassword)}
                 >
@@ -278,14 +320,24 @@ export default function TryFitLoginPage() {
             </div>
 
             <div className="form-options">
-              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-                <input type="checkbox" style={{ accentColor: 'black' }} /> Remember me
+              <label
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  cursor: "pointer",
+                }}
+              >
+                <input type="checkbox" style={{ accentColor: "black" }} />{" "}
+                Remember me
               </label>
-              <Link href="/signup" className="forgot-pass">Sign Up ?</Link>
+              <Link href="/signup" className="forgot-pass">
+                Sign Up ?
+              </Link>
             </div>
 
-            <motion.button 
-              type="submit" 
+            <motion.button
+              type="submit"
               className="btn-submit"
               whileTap={{ scale: 0.98 }}
             >
@@ -300,8 +352,6 @@ export default function TryFitLoginPage() {
               <Chrome size={18} /> Continue with Google
             </button>
           </form>
-
-          
         </motion.div>
       </section>
     </main>
