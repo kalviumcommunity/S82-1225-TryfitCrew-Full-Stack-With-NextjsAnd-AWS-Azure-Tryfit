@@ -1,0 +1,7 @@
+export const ERROR_CODES = {
+  VALIDATION_ERROR: "E001",
+  NOT_FOUND: "E002",
+  OUT_OF_STOCK: "E003",
+  DATABASE_ERROR: "E004",
+  INTERNAL_ERROR: "E500",
+} as const;
