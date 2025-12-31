@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { toast } from "react-hot-toast";
 import {
   ArrowRight,
   Mail,
@@ -57,11 +58,11 @@ export default function TryFitSignupPage() {
     const result = await res.json();
 
     if (!res.ok) {
-      alert(result.message);
+      toast.error(result.message);
       return;
     }
 
-    alert("Signup successful!");
+    toast.success("Signup successful!");
   };
 
   return (

@@ -2,7 +2,7 @@ import Navbar from "./components/navbar";
 import { AuthProvider } from "./context/AuthContext";
 import { UIProvider } from "./context/UIContext";
 import "./globals.css";
-
+import { Toaster } from "react-hot-toast";
 export default function RootLayout({
   children,
 }: {
@@ -15,6 +15,7 @@ export default function RootLayout({
           <UIProvider>
             <Navbar />
             {children}
+            <Toaster position="top-right" />
           </UIProvider>
         </AuthProvider>
       </body>

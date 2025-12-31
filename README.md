@@ -550,3 +550,25 @@ LayoutWrapper
 - Eliminates manual validation logic
 - Prevents invalid submissions
 - Improves maintainability and scalability
+
+
+## Toasts, Modals, and Feedback UI
+
+### Why Feedback UI?
+Feedback components improve clarity, trust, and usability by informing users about system states.
+
+### Implemented Components
+- Toast notifications using react-hot-toast
+- Loader during async API requests
+- Accessible modal for confirmation actions
+
+### Accessibility Considerations
+- aria-live for loaders and toasts
+- aria-modal and focus trapping for modals
+- Keyboard navigable buttons
+
+### User Flow Demonstrated
+Form Submit → Loader → Success/Error Toast
+
+### Impact
+These feedback layers reduce user uncertainty and improve perceived responsiveness.
