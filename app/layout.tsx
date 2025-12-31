@@ -1,6 +1,6 @@
 import Navbar from "./components/navbar";
-import { AuthProvider } from "@/context/AuthContext";
-import { UIProvider } from "@/context/UIContext";
+import { AuthProvider } from "./context/AuthContext";
+import { UIProvider } from "./context/UIContext";
 import "./globals.css";
 
 export default function RootLayout({

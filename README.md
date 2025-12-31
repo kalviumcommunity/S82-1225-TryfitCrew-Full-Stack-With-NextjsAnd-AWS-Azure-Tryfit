@@ -493,3 +493,32 @@ LayoutWrapper
 - Contexts are split to reduce unnecessary re-renders
 
 - Custom hooks encapsulate logic for better reuse and scalability
+
+## Client-side Data Fetching (SWR / Fetch API)
+
+### Data Fetching Strategy
+- SWR (Stale-While-Revalidate) used for client-side data fetching
+- Cached data returned instantly, followed by background revalidation
+
+### SWR Usage
+- useSWR() used with API endpoint as key
+- Automatic caching and refetch on focus
+
+### Mutations & Optimistic UI
+- mutate() used for optimistic updates
+- UI updates instantly before server confirmation
+- Cache revalidated after API response
+
+### Benefits
+- Faster UI with cached responses
+- Reduced redundant API calls
+- Better UX with optimistic updates
+
+### Demonstrated Behaviors
+- Cache hit vs cache miss
+- Background revalidation
+- Optimistic UI during data mutation
+
+### Performance Notes
+- Built-in caching improves performance
+- Declarative data fetching with minimal boilerplate
