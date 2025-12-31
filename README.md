@@ -407,3 +407,28 @@ for frequently accessed resources like user lists.
 Caching improves performance significantly but introduces stale-data risks.
 By combining TTL + explicit invalidation, we maintain cache coherence while
 benefiting from low-latency responses.
+
+
+## Page Routing & Dynamic Routes
+
+### Route Structure
+- Public Routes:
+  - `/login`
+  - `/news`
+- Protected Routes:
+  - `/dashboard`
+  - `/products`
+- Dynamic Routes:
+  - `/product/[id]`
+
+### Implementation Details
+- Implemented routing using Next.js App Router
+- Dynamic routes created using folder-based `[id]` segments
+- Middleware protects restricted routes using JWT validation
+- Shared layout provides consistent navigation
+- Custom 404 page added using `not-found.tsx`
+
+### Reflection
+Dynamic routing enables scalable URLs for products and users.  
+Middleware ensures secure access control while maintaining smooth navigation.  
+Custom 404 handling improves user experience and error recovery.
