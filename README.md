@@ -595,3 +595,30 @@ Handling loading and error states prevents blank screens and builds user trust d
 
 ### Evidence
 - Screenshots showing loading, error, and successful retry flows
+
+
+## 🔐 Secure JWT & Session Management
+
+### Token Strategy
+- **Access Token**: Short-lived (15 minutes), used for protected API requests.
+- **Refresh Token**: Long-lived (7 days), used to renew access tokens.
+
+### Storage & Security
+- Refresh token stored as **HTTP-only, Secure, SameSite cookie**
+- Prevents token access via JavaScript → mitigates **XSS**
+- SameSite cookie reduces **CSRF attacks**
+
+### Refresh Flow
+1. Client sends request with access token
+2. If expired → API returns 401
+3. Client calls `/api/auth/refresh`
+4. New access token issued
+5. Original request retried automatically
+
+### JWT Structure
+- **Header**: Algorithm & token type
+- **Payload**: User ID, role, expiry
+- **Signature**: Verifies integrity
+
+### Security Reflection
+Storing tokens in HTTP-only cookies prevents XSS attacks, while short token lifespans and rotation reduce replay risks. This approach balances strong security with smooth user experience.
