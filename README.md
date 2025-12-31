@@ -432,3 +432,27 @@ benefiting from low-latency responses.
 Dynamic routing enables scalable URLs for products and users.  
 Middleware ensures secure access control while maintaining smooth navigation.  
 Custom 404 handling improves user experience and error recovery.
+
+
+## Layout and Component Architecture
+
+### Component Structure
+LayoutWrapper  
+→ Header (Navbar)  
+→ Sidebar  
+→ Page Content  
+
+### Reusable Components
+- Header: Global navigation
+- Sidebar: Page navigation
+- LayoutWrapper: Shared layout
+- Button: Reusable UI element
+
+### Benefits
+- Reusability across pages
+- Consistent UI
+- Easy scalability
+
+### Accessibility
+- Semantic HTML
+- Keyboard-friendly navigation
