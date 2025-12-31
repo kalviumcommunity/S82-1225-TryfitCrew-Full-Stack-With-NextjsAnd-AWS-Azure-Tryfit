@@ -15,14 +15,27 @@ import {
   CheckCircle2,
   Dna,
 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signupSchema, SignupFormData } from "../../lib/schemas/signupschema";
 
 export default function TryFitSignupPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState("");
 
   const containerStagger = {
     animate: { transition: { staggerChildren: 0.05 } },
   };
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
+  });
+
+  const password = watch("password", "");
 
   const fadeInUp = {
     initial: { opacity: 0, y: 15 },
@@ -30,23 +43,21 @@ export default function TryFitSignupPage() {
     transition: { duration: 0.5, ease: [0.6, 0.05, 0.01, 0.9] },
   } as const;
 
-  const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleSignup = async (data: SignupFormData) => {
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name: `${firstName} ${lastName}`,
-        email,
-        password,
+        name: `${data.name}`,
+        email: data.email,
+        password: data.password,
       }),
     });
 
-    const data = await res.json();
+    const result = await res.json();
 
     if (!res.ok) {
-      alert(data.message);
+      alert(result.message);
       return;
     }
 
@@ -286,7 +297,7 @@ export default function TryFitSignupPage() {
             <p>Elevate your performance with TryFit membership.</p>
           </div>
 
-          <form onSubmit={handleSignup}>
+          <form onSubmit={handleSubmit(handleSignup)}>
             <div className="input-row">
               <div className="input-group">
                 <label className="label">First Name</label>
@@ -313,15 +324,17 @@ export default function TryFitSignupPage() {
 
             <div className="input-group">
               <label className="label">Password</label>
+
               <div className="field-wrap">
                 <Lock size={16} color="#ccc" />
+
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Min. 8 characters"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  {...register("password")}
                   required
                 />
+
                 <div
                   onClick={() => setShowPassword(!showPassword)}
                   style={{ cursor: "pointer", padding: "5px" }}
@@ -333,6 +346,40 @@ export default function TryFitSignupPage() {
                   )}
                 </div>
               </div>
+
+              {/* Password strength bar — UI unchanged */}
+              <div className="strength-bar">
+                <div
+                  className="strength-fill"
+                  style={{
+                    width:
+                      password.length > 0
+                        ? `${Math.min(password.length * 12, 100)}%`
+                        : "0%",
+                    background:
+                      password.length < 6
+                        ? "#ff4d4d"
+                        : password.length < 10
+                          ? "#ffd700"
+                          : "#4ade80",
+                  }}
+                />
+              </div>
+
+              {/* Optional error message (won’t affect layout) */}
+              {errors.password && (
+                <p
+                  style={{
+                    fontSize: "11px",
+                    color: "#ff4d4d",
+                    marginTop: "4px",
+                  }}
+                >
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+            <div>
               <div className="strength-bar">
                 <div
                   className="strength-fill"

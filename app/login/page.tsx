@@ -17,6 +17,8 @@ import {
 
 export default function TryFitLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
@@ -297,7 +299,13 @@ export default function TryFitLoginPage() {
               <label className="input-label">Email Address</label>
               <div className="input-field-wrap">
                 <Mail size={18} color="#aaa" />
-                <input type="email" placeholder="name@tryfit.com" required />
+                <input
+                  type="email"
+                  placeholder="name@tryfit.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
               </div>
             </div>
 
@@ -308,8 +316,11 @@ export default function TryFitLoginPage() {
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
+
                 <div
                   className="password-toggle"
                   onClick={() => setShowPassword(!showPassword)}
@@ -348,7 +359,11 @@ export default function TryFitLoginPage() {
               <span>Or continue with</span>
             </div>
 
-            <button type="button" className="btn-google">
+            <button
+              type="button"
+              className="btn-google"
+              onClick={() => alert("Google auth coming soon")}
+            >
               <Chrome size={18} /> Continue with Google
             </button>
           </form>

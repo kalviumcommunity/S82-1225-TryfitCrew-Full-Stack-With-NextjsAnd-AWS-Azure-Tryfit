@@ -522,3 +522,31 @@ LayoutWrapper
 ### Performance Notes
 - Built-in caching improves performance
 - Declarative data fetching with minimal boilerplate
+
+
+## Form Handling & Validation (React Hook Form + Zod)
+
+### Validation Strategy
+- React Hook Form is used for efficient form state management
+- Zod schemas enforce input correctness and type safety
+- zodResolver integrates schema validation seamlessly
+
+### Forms Implemented
+- Signup Form (First name, Last name, Email, Password)
+- Login Form (Email, Password)
+
+### Key Features
+- Real-time validation feedback
+- Schema-driven validation rules
+- Error messages displayed below inputs
+- Password visibility toggle with validation
+
+### Accessibility Considerations
+- Semantic labels for all inputs
+- aria-invalid used for invalid fields
+- Keyboard-friendly form navigation
+
+### Benefits
+- Eliminates manual validation logic
+- Prevents invalid submissions
+- Improves maintainability and scalability
