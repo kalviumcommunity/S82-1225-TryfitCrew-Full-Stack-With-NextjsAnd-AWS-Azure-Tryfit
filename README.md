@@ -572,3 +572,26 @@ Form Submit → Loader → Success/Error Toast
 
 ### Impact
 These feedback layers reduce user uncertainty and improve perceived responsiveness.
+
+
+## Error & Loading States
+
+### Why This Matters
+Handling loading and error states prevents blank screens and builds user trust during slow or failed operations.
+
+### Implementation
+- Used App Router’s `loading.tsx` for skeleton loaders
+- Used `error.tsx` as an error boundary with retry support
+- Simulated delays and failures to verify behavior
+
+### UX Benefits
+- Skeletons provide layout context during loading
+- Friendly error messages reduce frustration
+- Retry button allows recovery without refresh
+
+### Accessibility
+- Clear status messaging
+- Focus-safe retry actions
+
+### Evidence
+- Screenshots showing loading, error, and successful retry flows

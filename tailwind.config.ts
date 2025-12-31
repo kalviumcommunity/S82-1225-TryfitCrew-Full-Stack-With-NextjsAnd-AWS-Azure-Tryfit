@@ -1,0 +1,21 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  darkMode: "class", // <--- THIS IS THE CRITICAL LINE FOR THE TOGGLE
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}", // Includes src just in case
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+      },
+    },
+  },
+  plugins: [],
+};
+export default config;
