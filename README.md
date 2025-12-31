@@ -456,3 +456,40 @@ LayoutWrapper
 ### Accessibility
 - Semantic HTML
 - Keyboard-friendly navigation
+
+
+## State Management using Context & Hooks
+
+### Contexts Used
+
+- AuthContext: manages logged-in user authentication state
+
+- UIContext: manages global UI state like theme and sidebar visibility
+
+### Custom Hooks
+
+- useAuth(): abstracts authentication logic (login, logout, auth status)
+
+- useUI(): abstracts UI state logic (theme toggle, sidebar toggle)
+
+### Benefits
+
+- Avoids prop drilling across components
+
+- Centralized and predictable global state
+
+- Cleaner, readable, and maintainable components
+
+### Demonstrated State Changes
+
+- User Login / Logout
+
+- Light ↔ Dark theme toggle
+
+- Sidebar open / close toggle
+
+### Performance Notes
+
+- Contexts are split to reduce unnecessary re-renders
+
+- Custom hooks encapsulate logic for better reuse and scalability
