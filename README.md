@@ -1,74 +1,136 @@
-# Try-Fit — Environment-Aware Builds & Secure Secrets Management
+# 🧥 TryFit
 
-## Rendering Strategies Used in TryFit
+![TryFit Home Page](./app/components/tryfit-snap.png)
 
-### Pages and Rendering Modes
+[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://tryfit.netlify.app)
+[![API Status](https://img.shields.io/badge/API-active-blue.svg)](https://tryfit-backend.onrender.com)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 
-#### Static Rendering (SSG)
+**TryFit** is a full-stack digital fashion & lifestyle platform designed to deliver a **personalized fit and style experience**. By blending **technology, aesthetics, and data**, TryFit helps users discover outfits that truly fit their body, lifestyle, and preferences.
 
-- Page: /about
+Built with a modern web stack, TryFit focuses on **performance, scalability, and a premium user experience**.
 
-- This page is statically generated at build time using export const revalidate = false.
+---
 
-#### Dynamic Rendering (SSR)
+## 📑 Table of Contents
 
-- Page: /dashboard
+- [Overview](#-overview)
+- [Live Demo](#-live-demo)
+- [Key Features](#-key-features)
+- [User Roles](#-core-user-roles)
+- [Tech Stack](#-tech-stack)
+- [Getting Started](#-getting-started)
+- [Project Structure](#-project-structure)
+- [Contact](#-contact)
 
-- This page is rendered on every request using export const dynamic = 'force-dynamic' and cache: 'no-store'.
+---
 
-#### Hybrid Rendering (ISR)
+## 🌟 Overview
 
-= Page: /news
+In the era of fast fashion, finding the "perfect fit" is often a challenge. TryFit bridges the gap between e-commerce and personal styling. The platform utilizes intelligent data points to suggest sizes and styles that align with the user's unique profile, ensuring confidence in every purchase.
 
-- This page uses Incremental Static Regeneration with export const revalidate = 60.
+---
 
-#### Why Each Approach Was Chosen
+## 🌐 Live Demo
 
-- Static Rendering was chosen for the About page because it contains brand and company information that rarely changes. Pre-rendering ensures fast load times and good SEO.
+Explore the application live:
 
-- Dynamic Rendering was chosen for the Dashboard because it displays user-specific data such as active trials and order status, which must always be up to date.
+- **Frontend Application:** [https://try-fit.netlify.app](https://try-fit.netlify.app)
+- **Backend API:** [https://tryfit-backend.onrender.com](https://tryfit-backend.onrender.com)
 
-- Hybrid Rendering was chosen for the News page because product trends and new arrivals change periodically but do not require real-time updates.
+---
 
-### Performance, Caching, and User Experience
+## ✨ Key Features
 
-- Static pages load instantly since they are served from cache without server computation.
+### 🛍️ For Shoppers
+- **Smart Recommendations:** An AI-driven engine that suggests outfits based on past preferences and body type.
+- **Size Intelligence:** Smart sizing algorithms to reduce returns and ensure the perfect fit.
+- **Digital Wardrobe:** Manage your current collection and mix-and-match with new items.
+- **Save Favorites:** Create collections of looks you love.
 
-- Dynamic pages ensure data freshness and accuracy by fetching data on every request.
+### ⚙️ Platform Capabilities
+- **Secure Authentication:** Robust login/signup using JWT and Google OAuth.
+- **Real-time Updates:** Socket.IO integration for instant notifications and preference updates.
+- **Responsive Design:** A fluid UI that works perfectly on desktop, tablet, and mobile.
+- **Performance Optimized:** Utilizing Redis caching for fast data retrieval.
 
-- Hybrid pages combine both benefits by serving cached content while automatically revalidating in the background, reducing server load and improving response times.
+---
 
-- This selective caching strategy improves performance while maintaining a smooth user experience.
+## 👥 Core User Roles
 
-#### Verification: Page Generation Modes
+| Role | Responsibilities |
+| :--- | :--- |
+| **👤 Users** | Create profiles, save outfits, receive recommendations, manage digital wardrobe. |
+| **🧑‍💼 Admins / Stylists** | Curate collections, manage style content, analyze user trends and engagement data. |
+| **🏷️ Brand Partners** | (Optional) Showcase collections and track engagement insights on their products. |
 
-- Static Rendering: Verified via build-time logs and absence of repeated network requests on refresh.
+---
 
-- Dynamic Rendering: Verified using DevTools Network tab showing data fetched on every request.
+## 🧰 Tech Stack
 
-- Hybrid Rendering: Verified by observing content regeneration after the 60-second revalidation window in deployment logs.
+This project uses a high-performance MERN+ architecture.
 
+| Category | Technology |
+| :--- | :--- |
+| **Frontend** | React.js, Next.js, CSS3 (Custom/Modules), Framer Motion |
+| **Backend** | Node.js, Express.js |
+| **Database** | MongoDB, Mongoose |
+| **Authentication** | JSON Web Tokens (JWT), Google OAuth |
+| **Realtime** | Socket.IO |
+| **Caching** | Redis |
+| **DevOps** | Docker, Vercel (Frontend), Render (Backend) |
+| **Testing** | Jest, Mocha |
 
-### Reflection on Trade-offs and Scalability
+---
 
-- If TryFit had 10× more users, using SSR for all pages would significantly increase server load and hosting costs.
+## 🚀 Getting Started
 
-- In that scenario, more pages would be converted to static or hybrid rendering, reserving SSR only for critical user-specific flows such as dashboards and checkout.
+Follow these instructions to set up the project locally.
 
-- This approach would improve scalability while maintaining data freshness where it matters most.
+### Prerequisites
+- Node.js (v16+)
+- npm or yarn
+- MongoDB (Local or Atlas URI)
+- Redis (Optional, for caching)
 
-### Environment-Aware Builds
+### Installation
 
-This project uses separate environment configuration files for development, staging, and production. Environment-specific build scripts ensure the correct configuration is loaded during deployment.
+1.  **Clone the repository**
+    ```bash
+    git clone [https://github.com/your-username/tryfit.git](https://github.com/your-username/tryfit.git)
+    cd tryfit
+    ```
 
-### Secrets Management
+2.  **Install Dependencies (Root/Backend)**
+    ```bash
+    npm install
+    ```
 
-Sensitive information such as database URLs and API endpoints are managed securely using environment variables and GitHub Secrets. No real secrets are committed to the repository.
+3.  **Install Dependencies (Frontend)**
+    ```bash
+    cd client
+    npm install
+    ```
 
-### Build Verification
+4.  **Environment Variables**
+    Create a `.env` file in the root directory and add the following:
+    ```env
+    PORT=5000
+    MONGO_URI=your_mongodb_connection_string
+    JWT_SECRET=your_jwt_secret
+    GOOGLE_CLIENT_ID=your_google_id
+    GOOGLE_CLIENT_SECRET=your_google_secret
+    REDIS_URL=your_redis_url
+    ```
 
-Separate builds were tested using `npm run build:staging` and `npm run build:production`, confirming that the application behaves correctly across environments.
+5.  **Run the Application**
+    *Development Mode:*
+    ```bash
+    # Run Backend
+    npm run dev
 
-### Reflection
+    # Run Frontend (in a separate terminal)
+    cd client && npm run dev
+    ```
 
-Multi-environment setups improve CI/CD reliability by allowing testing in staging before production deployment, reducing the risk of breaking live systems.
+---
