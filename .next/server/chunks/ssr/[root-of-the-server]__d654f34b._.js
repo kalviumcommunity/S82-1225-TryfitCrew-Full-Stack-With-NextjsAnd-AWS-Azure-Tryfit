@@ -1,0 +1,3 @@
+module.exports=[93695,(a,b,c)=>{b.exports=a.x("next/dist/shared/lib/no-fallback-error.external.js",()=>require("next/dist/shared/lib/no-fallback-error.external.js"))},70864,a=>{a.n(a.i(33290))},43619,a=>{a.n(a.i(79962))},13718,a=>{a.n(a.i(85523))},18198,a=>{a.n(a.i(45518))},62212,a=>{a.n(a.i(66114))},92480,a=>{"use strict";var b=a.i(7997);async function c(){let a=await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5"),c=await a.json();return(0,b.jsxs)("main",{children:[(0,b.jsx)("h1",{children:"News Page (Hybrid Rendering - ISR)"}),(0,b.jsx)("ul",{children:c.map(a=>(0,b.jsx)("li",{children:a.title},a.id))})]})}a.s(["default",()=>c,"revalidate",0,60])}];
+
+//# sourceMappingURL=%5Broot-of-the-server%5D__d654f34b._.js.map

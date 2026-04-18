@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/balaj/Documents/Tryfit/tryfit/app/about/page.tsx"],"sourcesContent":["export const revalidate = false;\r\n\r\ninterface Post {\r\n  id: number;\r\n  title: string;\r\n}\r\n\r\nexport default async function AboutPage(){\r\n  const res = await fetch(\r\n    'https://jsonplaceholder.typicode.com/posts/1'\r\n  );\r\n\r\n  const data: Post = await res.json();\r\n\r\n  return (\r\n    <main>\r\n      <h1>About Page (Static)</h1>\r\n      <p>{data.title}</p>\r\n    </main>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;;;;AAAO,MAAM,aAAa;AAOX,eAAe;IAC5B,MAAM,MAAM,MAAM,MAChB;IAGF,MAAM,OAAa,MAAM,IAAI,IAAI;IAEjC,qBACE,8OAAC;;0BACC,8OAAC;0BAAG;;;;;;0BACJ,8OAAC;0BAAG,KAAK,KAAK;;;;;;;;;;;;AAGpB"}}]
+}
